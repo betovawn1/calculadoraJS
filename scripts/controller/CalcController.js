@@ -59,6 +59,18 @@ class CalcController {
         console.log('result is ==== ' + result);
         this._operation = [result, last];
         console.log('operation com ---> ' + this._operation);
+        this.setLastNumberInDisplay();
+    }
+
+    setLastNumberInDisplay() {
+        let lastNumber, i;
+        for (i = this._operation.length-1; i >= 0; i--) {
+            if (!this.isOperator(this._operation[i])) {
+                lastNumber = this._operation[i];
+                break;
+            }
+        }
+        this.displayCalc = lastNumber;
     }
 
     addOperation(value) {
@@ -73,6 +85,7 @@ class CalcController {
             } else {
                 this.pushOperation(value);
                 console.log(this._operation);
+                this.setLastNumberInDisplay();
             }
         } else {
             if (this.isOperator(value)) {
@@ -81,6 +94,7 @@ class CalcController {
             } else {
                 let newValueOperation = this.getLastOperation().toString() + value.toString();
                 this.setLastOperation(parseInt(newValueOperation));
+                this.setLastNumberInDisplay();
                 console.log(this._operation);
             }
         }
